@@ -178,8 +178,11 @@ def check_lost(positions):
 def get_shape():
     return Piece(5, 0, random.choice(shapes))
 
-def draw_text_middle():
-    pass
+def draw_text_middle(surface, text, size, color):
+    font = pygame.font.SysFont('Tahoma', size, bold=True)
+    label = font.render(text, 1, color)
+
+    surface.blit(label, (top_left_x + top_left_y /2 - (label.get_width()/2), top_left_y + play_height/2 - label.get_height()/2))
 
 def draw_grid(surface, grid): # at 3:00
     sx = top_left_x
@@ -341,7 +344,11 @@ def main(win):
         pygame.display.update()
 
         if check_lost(locked_positions):
+            draw_text_middle(win, "YOU LOST!", 80, (255,255,255))
+            pygame.display.update()
+            pygame.time.delay(1500)
             run = False
+
     pygame.display.quit()
 
 def main_menu(win):
