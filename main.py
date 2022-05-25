@@ -184,14 +184,15 @@ def draw_text_middle(surface, text, size, color):
 
     surface.blit(label, (top_left_x + top_left_y /2 - (label.get_width()/2), top_left_y + play_height/2 - label.get_height()/2))
 
-def draw_grid(surface, grid): # at 3:00
+def draw_grid(surface, grid):
     sx = top_left_x
     sy = top_left_y
 
     for i in range(len(grid)):
-        pygame.draw.line(surface, (128, 128, 128), (sx, sy + i*block_size), (sx+play_width, sy+i*block_size)) # TODO replace line with rect?
+        pygame.draw.line(surface, (128, 128, 128), (sx, sy + i*block_size), (sx+play_width, sy+i*block_size))
         for j in range(len(grid)):
-            pygame.draw.line(surface, (128, 128, 128), (sx + j * block_size, sy), (sx + j * block_size, sy + play_height))
+            if j <= 10:
+                pygame.draw.line(surface, (128, 128, 128), (sx + j * block_size, sy), (sx + j * block_size, sy + play_height))
 
 def clear_rows(grid, locked):
     inc = 0
@@ -215,8 +216,6 @@ def clear_rows(grid, locked):
                 newKey = (x, y + inc)
                 locked[newKey] = locked.pop(key)
     return inc
-
-
 
 def draw_next_shape(shape, surface):
     font = pygame.font.SysFont('tahoma', 30)
@@ -259,7 +258,6 @@ def draw_window(surface, grid, score=0):
     pygame.draw.rect(surface, (255,0,0), (top_left_x, top_left_y, play_width, play_height), 4)
 
     draw_grid(surface, grid)
-   # pygame.display.update()
 
 def main(win):
     locked_positions = {}
@@ -357,5 +355,3 @@ def main_menu(win):
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('Tetris')
 main_menu(win)
-
-# 3:40
